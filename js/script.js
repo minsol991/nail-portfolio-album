@@ -81,7 +81,7 @@
       card.className = "card";
       card.dataset.index = idx;
       card.innerHTML =
-        '<img loading="lazy" src="' + esc(w.photos[0]) + '" alt="' + esc(nm || w.date || "") + '" />' +
+        '<img src="' + esc(w.photos[0]) + '" alt="' + esc(nm || w.date || "") + '" />' +
         (n > 1 ? '<span class="card__count">' + iconStack() + n + "</span>" : "") +
         '<figcaption class="card__overlay"><div>' +
           (w.date ? '<span class="card__date">' + esc(w.date) + "</span>" : "") +
