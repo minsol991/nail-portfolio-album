@@ -11,17 +11,14 @@ const SITE = {
   // 첫 화면 큰 글자
   heroTitle: "Nail Portfolio",
 
-  // 큰 글자 아래 작은 글자 (한 줄 프로필)
-  heroSub: "네일 자격증 취득 · 2026.06.25",
-
-  // 첫 화면 배경 사진 (images 폴더 기준 경로. 비우면 배경 없이 글자만)
-  heroImage: "images/2026-06-24 토마토&체리/1 메인.jpg.jpg",
+  // 큰 글자 아래 작은 글자 (필요 없으면 "" 처럼 비워 두세요)
+  heroSub: "",
 
   // ── 연락처 (필요 없는 줄은 따옴표 안을 비우면 버튼이 안 나옵니다) ──
   contact: {
     instagram: "https://instagram.com/_sol_log_",   // 인스타그램 주소
     kakao:     "",                                // 카카오톡 오픈채팅 링크
     email:     "",                                // 이메일
-    phone:     "010-2468-0183",                   // 전화번호
+    phone:     "",                                // 전화번호 (예: 010-0000-0000)
   },
 };
