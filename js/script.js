@@ -6,6 +6,19 @@
 (function () {
   "use strict";
 
+  /* ---------- 첫 진입 인트로 ---------- */
+  (function initIntro() {
+    var intro = document.getElementById("intro");
+    if (!intro) return;
+    var shown = false;
+    try { shown = sessionStorage.getItem("introShown") === "1"; } catch (e) {}
+    if (shown) { if (intro.parentNode) intro.parentNode.removeChild(intro); return; }
+    try { sessionStorage.setItem("introShown", "1"); } catch (e) {}
+    document.body.classList.add("intro-active");
+    setTimeout(function () { intro.classList.add("intro--hide"); document.body.classList.remove("intro-active"); }, 1700);
+    setTimeout(function () { if (intro.parentNode) intro.parentNode.removeChild(intro); }, 2700);
+  })();
+
   /* ---------- config 반영 ---------- */
   function applyConfig() {
     document.querySelectorAll("[data-site]").forEach(function (el) {
@@ -20,6 +33,15 @@
     document.title = SITE.name || "Nail Portfolio";
     var y = document.getElementById("year");
     if (y) y.textContent = "2026";
+
+    // 히어로 배경 사진
+    var heroBg = document.getElementById("heroBg");
+    if (heroBg && SITE.heroImage) {
+      heroBg.style.backgroundImage = "url('" + encodeURI(SITE.heroImage) + "')";
+      var hero = document.querySelector(".hero");
+      if (hero) hero.classList.add("has-image");
+    }
+
     buildContact();
   }
 
@@ -89,6 +111,15 @@
         "</div></figcaption>";
       card.addEventListener("click", function () { openLightbox(idx); });
       gallery.appendChild(card);
+      // blur-up: 사진 로딩이 끝나면 또렷하게
+      var im = card.querySelector("img");
+      if (im) {
+        if (im.complete && im.naturalWidth) { im.classList.add("is-loaded"); }
+        else {
+          im.addEventListener("load", function () { im.classList.add("is-loaded"); });
+          im.addEventListener("error", function () { im.classList.add("is-loaded"); });
+        }
+      }
     });
     revealOnScroll();
   }
