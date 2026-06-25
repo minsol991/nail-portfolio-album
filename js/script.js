@@ -173,15 +173,22 @@
 
   /* ---------- 스크롤 등장 효과 ---------- */
   function revealOnScroll() {
+    document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("is-in"); });
+    var cards = [].slice.call(document.querySelectorAll(".card"));
+    function showAll() { cards.forEach(function (c) { c.classList.add("is-in"); }); }
+
+    // IntersectionObserver 미지원이면 그냥 전부 보이기
+    if (!("IntersectionObserver" in window)) { showAll(); return; }
+
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
       });
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".card").forEach(function (c, i) {
-      c.style.transitionDelay = (i % 3) * 0.08 + "s"; io.observe(c);
-    });
-    document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("is-in"); });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
+    cards.forEach(function (c, i) { c.style.transitionDelay = (i % 3) * 0.07 + "s"; io.observe(c); });
+
+    // 안전장치: 어떤 이유로든 안 떴으면 강제로 전부 보이게 (사진이 숨은 채 남는 문제 방지)
+    setTimeout(showAll, 1200);
   }
 
   /* ---------- 메뉴/스크롤 ---------- */
